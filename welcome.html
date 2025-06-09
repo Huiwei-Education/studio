@@ -32,66 +32,9 @@
             font-style: normal;
         }
 
-        /* 第一部分：加载屏幕 */
-        #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.8s ease;
-        }
+    
 
-        .loader {
-            width: 5rem;
-            height: 5rem;
-            border: 0.5rem solid rgba(255, 255, 255, 0.1);
-            border-top: 0.5rem solid #2a9d8f;
-            border-radius: 50%;
-            animation: spin 1.5s linear infinite;
-            margin-bottom: 1.875rem;
-        }
-
-        .loading-text {
-            font-size: 1.5rem;
-            color: #fff;
-            text-align: center;
-            transition: all 0.5s ease;
-        }
-
-        /* 第二部分：引言屏幕 */
-        #intro-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 900;
-        }
-
-        .intro-text {
-            font-family: 'CustomFont', sans-serif;
-            font-size: 3.5rem;
-            text-align: center;
-            margin: 1.25rem 0;
-            opacity: 0;
-            transform: translateY(6.25rem);
-            color: #fff;
-            text-shadow: 0 0 0.625rem rgba(42, 157, 143, 0.5);
-        }
-
-        /* 第三部分：主屏幕 */
+        /* 主屏幕 */
         #main-screen {
             position: fixed;
             top: 0;
@@ -659,59 +602,47 @@
     </style>
 </head>
 <body>
-    <!-- 第一部分：加载屏幕 -->
-    <div id="loading-screen">
-        <div class="loader"></div>
-        <div class="loading-text" id="loading-text">正在加载中，请稍候...</div>
-    </div>
 
-    <!-- 第二部分：引言屏幕 -->
-    <div id="intro-screen">
-        <div class="intro-text" id="text1">为莘莘学子改变命运而讲课</div>
-        <div class="intro-text" id="text2">为千万学生少走弯路而著书</div>
-    </div>
-
-    <!-- 第三部分：主屏幕 -->
+    <!-- 主屏幕 -->
     <div id="main-screen">
         <nav class="main-nav">
             <div class="nav-logo">汇</div>
-            <button class="nav-btn" id="main-nav-btn">了解更多</button>
+            <button class="nav-btn" id="main-nav-btn">登录注册</button>
         </nav>
         
         <div class="products-container">
             <div class="product-card">
-                <h2 class="product-title">高考冲刺课程</h2>
-                <p class="product-description">针对高三学生的全方位备考方案，涵盖所有主要科目，由资深教师团队打造。</p>
-                <div class="product-price">¥4,800 / 学期</div>
+                <h2 class="product-title">教师资源</h2>
+                <p class="product-description">图书匹配资料，由汇委学科工作室编写组制作</p>
+                <div class="product-price">精准搭配 丰富教育</div>
                 <ul class="product-features">
-                    <li>每周4次课程，每次2小时</li>
-                    <li>专属学习计划制定</li>
-                    <li>每月模拟考试及分析</li>
-                    <li>个性化错题整理系统</li>
+                 
                 </ul>
-                <button class="action-btn">立即报名</button>
+                <button class="action-btn">点击查看</button>
             </div>
             
             <div class="product-card">
-                <h2 class="product-title">学科基础强化班</h2>
-                <p class="product-description">针对初中和高中生的学科基础强化课程，帮助学生打好知识基础。</p>
-                <div class="product-price">¥3,200 / 学期</div>
+                <h2 class="product-title">备考资源</h2>
+                <p class="product-description">由汇委学科工作室编写组整理</p>
+                <div class="product-price">精准搭配 丰富教育</div>
                 <ul class="product-features">
-                    <li>数学、物理、化学、英语四科可选</li>
-                    <li>小班教学（每班不超过8人）</li>
-                    <li>课后专属答疑服务</li>
-                    <li>每月学习进度报告</li>
                 </ul>
-                <button class="action-btn">立即报名</button>
+                <button class="action-btn">立即查看</button>
             </div>
         </div>
         
-        <div class="action-container">
-            <button class="action-btn" id="main-action-btn">了解更多课程</button>
-        </div>
+      版权所有·未经本公司书面许可严禁任何人以任何方式直接或间接使用任何手段以任何方式使用本产品的任何部分用于任何用途·违者必究
+
+本网站所有数据及文档均受《著作权法》及相关法律法规保护，任何组织及个人不得侵权，违者本公司将严厉依法追究侵权责任，特此声明。
+
+All data and documents on this website are protected by the Copyright Law and relevant laws and regulations. No organization or individual may infringe upon them.
+
+The company will severely investigate and hold violators liable for infringement, hereby declared.
+
+
         
         <footer class="main-footer">
-            © 2023 汇委学科工作室 版权所有 | 教育许可证号：EDU20231234
+            © 2022-2025 汇委学科工作室 版权所有 | HUIWEI EDUCATION
         </footer>
     </div>
 
@@ -720,9 +651,9 @@
         <nav class="detail-nav">
             <div class="detail-logo">汇</div>
             <div class="detail-nav-links">
-                <a href="#featured">热门课程</a>
-                <a href="#original">原创资源</a>
-                <a href="#contact">预约体验</a>
+                <a href="#featured">教学资源</a>
+                <a href="#original">历年真题</a>
+                <a href="#contact">模拟考试</a>
             </div>
             <button class="hamburger" id="hamburger">
                 <i class="fas fa-bars"></i>
@@ -730,23 +661,11 @@
         </nav>
         
         <div class="mobile-nav" id="mobileNav">
-            <a href="#featured">热门课程</a>
-            <a href="#original">原创资源</a>
-            <a href="#contact">预约体验</a>
+            <a href="#featured">教学资源</a>
+            <a href="#original">历年真题</a>
+            <a href="#contact">模拟考试</a>
         </div>
         
-        <section class="featured-section" id="featured">
-            <div class="featured-content">
-                <div class="featured-text">
-                    <h1 class="featured-title">2023高考冲刺精英班</h1>
-                    <p class="featured-description">汇集10年高考辅导经验，由特级教师团队打造的全方位冲刺方案。通过科学的复习计划、精准的考点预测和高效的解题技巧，帮助学生在最后阶段实现突破。</p>
-                    <button class="featured-btn">查看课程详情</button>
-                </div>
-                <div class="featured-image">
-                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" alt="高考冲刺课程">
-                </div>
-            </div>
-        </section>
         
         <section class="original-section" id="original">
             <div class="section-title">
@@ -758,7 +677,7 @@
                 <div class="original-card">
                     <div class="card-header">
                         <div class="card-label">汇委原创</div>
-                        <h3 class="card-title">优质教材</h3>
+                        <h3 class="card-title">优质教辅</h3>
                     </div>
                     <div class="card-image">
                         <img src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&w=800&q=80" alt="教材">
@@ -805,39 +724,12 @@
                 <p class="subtitle">持续更新，满足多样需求</p>
             </div>
             
-            <div class="original-container">
-                <div class="original-card">
-                    <div class="card-header">
-                        <div class="card-label">汇委原创</div>
-                        <h3 class="card-title">在线课程</h3>
-                    </div>
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1548407260-da850faa41e3?auto=format&fit=crop&w=800&q=80" alt="在线课程">
-                    </div>
-                    <div class="card-content">
-                        <p>灵活便捷的在线课程，随时随地学习，支持回放和互动，让学习不受时间和空间限制。</p>
-                        <button class="action-btn">查看详情</button>
-                    </div>
-                </div>
+                
                 
                 <div class="original-card">
                     <div class="card-header">
                         <div class="card-label">汇委原创</div>
-                        <h3 class="card-title">名师讲座</h3>
-                    </div>
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80" alt="名师讲座">
-                    </div>
-                    <div class="card-content">
-                        <p>定期举办的名师讲座，分享学习方法和考试技巧，拓宽学生视野，提升学习效率。</p>
-                        <button class="action-btn">查看详情</button>
-                    </div>
-                </div>
-                
-                <div class="original-card">
-                    <div class="card-header">
-                        <div class="card-label">汇委原创</div>
-                        <h3 class="card-title">学习社区</h3>
+                        <h3 class="card-title">资源分享</h3>
                     </div>
                     <div class="card-image">
                         <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=800&q=80" alt="学习社区">
@@ -855,16 +747,15 @@
                 <h2>汇委学科工作室简介</h2>
             </div>
             <div class="intro-content">
-                <p>汇委学科工作室成立于2010年，是一家专注于中小学学科教育的专业机构。工作室秉承"为莘莘学子改变命运而讲课，为千万学生少走弯路而著书"的教育理念，致力于为学生提供高质量的学科辅导和学习资源。</p>
-                <p>我们拥有一支由特级教师、学科带头人和一线优秀教师组成的专业团队，他们具有丰富的教学经验和深厚的学科知识，能够精准把握教学重点和难点，为学生提供个性化的学习方案。</p>
-                <p>工作室开设了高考冲刺、学科基础强化、竞赛辅导等多种课程，涵盖了数学、物理、化学、英语等主要学科。我们采用小班教学和一对一辅导相结合的方式，确保每个学生都能得到充分的关注和指导。</p>
+                <p>汇委学科工作室成立于2022年，是一家专注于山西中考教育的专业机构。工作室秉承"专注教育 用心制作"的教育口号，致力于为学生提供高质量的学科辅导和学习资源。</p>
+                <p>我们拥有一支专业的编辑与排版团队，他们具有丰富的教学经验和深厚的学科知识，能够精准把握教学重点和难点，为山西中考贡献一份力。</p>
                 <p>多年来，汇委学科工作室已帮助数千名学生提升了学习成绩，实现了升学目标。未来，我们将继续坚持教育初心，不断创新教学方法，为更多学生提供优质的教育服务。</p>
             </div>
         </section>
         
         <footer class="detail-footer" id="contact">
             <div class="copyright">
-                © 2023 汇委学科工作室 版权所有 | 京ICP备2023000000号
+                © 2022-2025 汇委学科工作室 版权所有 | 晋ICP备案
             </div>
         </footer>
     </div>
