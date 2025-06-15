@@ -3,10 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>汇委学科工作室 - 专业教育服务</title>
+    <title>汇委学科工作室</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* 基础样式 */
+        @font-face {
+            font-family: 'KaiFont';
+            src: url('/font/kai.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        :root {
+            --primary-color: #2a9d8f;
+            --secondary-color: #1a2a6c;
+            --accent-color: #e76f51;
+            --light-bg: #f8f9fa;
+            --dark-bg: #121212;
+            --text-color: #333;
+            --text-light: #fff;
+            --text-gray: #666;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,241 +32,155 @@
         }
 
         html {
+            scroll-behavior: smooth;
             font-size: 16px;
         }
 
         body {
-            background: #000;
-            color: #333;
+            color: var(--text-color);
             overflow-x: hidden;
         }
 
-        /* 自定义字体 */
-        @font-face {
-            font-family: 'CustomFont';
-            src: url('https://fonts.gstatic.com/s/notosanssc/v26/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.4.woff2') format('woff2');
-            font-weight: normal;
-            font-style: normal;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
 
-    
-
-        /* 主屏幕 */
-        #main-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a2a6c, #2a9d8f);
-            display: none;
-            flex-direction: column;
-            z-index: 800;
-            overflow: hidden;
-        }
-
-        /* 导航栏 */
-        .main-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem 2.5rem;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .nav-logo {
-            width: 3.125rem;
-            height: 3.125rem;
-            background: #2a9d8f;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        .nav-btn {
-            background: #2a9d8f;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5625rem;
-            border-radius: 1.875rem;
-            font-size: 1rem;
-            cursor: pointer;
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 0.25rem 0.9375rem rgba(0, 0, 0, 0.2);
         }
 
-        .nav-btn:hover {
-            background: #1d6f64;
-            transform: translateY(-0.1875rem);
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-light);
         }
 
-        /* 商品展示 */
-        .products-container {
-            display: flex;
-            flex: 1;
-            justify-content: center;
-            align-items: center;
-            padding: 0 1.25rem;
-            gap: 1.875rem;
-            flex-wrap: wrap;
-            overflow-y: auto;
-            padding-bottom: 2rem;
+        .btn-primary:hover {
+            background-color: #1d6f64;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .product-card {
-            background: white;
-            border-radius: 1.25rem;
-            padding: 1.875rem;
-            width: 21.875rem;
-            max-width: 90%;
-            box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.2);
-            color: #333;
-            transition: all 0.4s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-0.625rem);
-            box-shadow: 0 0.9375rem 2.5rem rgba(0, 0, 0, 0.3);
-        }
-
-        .product-title {
-            font-size: 1.5rem;
-            margin-bottom: 0.9375rem;
-            color: #1a2a6c;
-        }
-
-        .product-description {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 1.25rem;
-            color: #555;
-        }
-
-        .product-price {
-            font-size: 1.375rem;
-            font-weight: bold;
-            color: #2a9d8f;
-            margin-bottom: 1.25rem;
-        }
-
-        .product-features {
-            list-style: none;
-            margin-bottom: 1.5625rem;
-        }
-
-        .product-features li {
-            padding: 0.5rem 0;
-            border-bottom: 0.0625rem solid #eee;
-        }
-
-        .product-features li:before {
-            content: "✓";
-            color: #2a9d8f;
-            margin-right: 0.625rem;
-            font-weight: bold;
-        }
-
-        .action-container {
-            display: flex;
-            justify-content: center;
-            padding: 1.25rem;
-        }
-
-        .action-btn {
-            background: #2a9d8f;
-            color: white;
-            border: none;
-            padding: 0.9375rem 2.5rem;
-            border-radius: 1.875rem;
-            font-size: 1.125rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0.25rem 0.9375rem rgba(0, 0, 0, 0.2);
-        }
-
-        .action-btn:hover {
-            background: #1d6f64;
-            transform: translateY(-0.1875rem);
-        }
-
-        /* 版权信息 */
-        .main-footer {
-            padding: 1.25rem;
+        .section-title {
             text-align: center;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.875rem;
-            background: transparent;
+            margin-bottom: 3rem;
         }
 
-        /* 第四部分：详细内容屏幕 */
-        #detail-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            display: none;
-            flex-direction: column;
-            z-index: 700;
-            overflow-y: auto;
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.75rem;
+            position: relative;
         }
 
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .section-title p {
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 1.25rem auto 0;
+        }
+
+        /* 导航栏样式 - 优化了背景和阴影 */
         .detail-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.25rem 2.5rem;
-            background: #fff;
-            box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.1);
-            position: sticky;
+            padding: 1.25rem 1.5rem;
+            position: fixed;
             top: 0;
+            left: 0;
+            width: 100%;
             z-index: 100;
+            transition: all 0.3s ease;
+            background: transparent;
         }
 
-        .detail-logo {
-            width: 3.125rem;
-            height: 3.125rem;
-            background: #2a9d8f;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1.5rem;
+        .detail-nav.scrolled {
+            background: rgba(255, 255, 255, 0.8); /* 更浅的背景 */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.22); /* 更重的阴影 */
+        }
+
+        /* 导航栏图标样式 */
+        .nav-logo {
+            height: 40px; /* 固定高度 */
+            transition: all 0.3s ease;
+        }
+        
+        .nav-logo img {
+            height: 100%;
+            width: auto;
+            transition: opacity 0.3s ease;
+        }
+        
+        .logo-white {
+            position: absolute;
+            opacity: 1;
+        }
+        
+        .logo-black {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .detail-nav.scrolled .logo-white {
+            opacity: 0;
+        }
+        
+        .detail-nav.scrolled .logo-black {
+            opacity: 1;
         }
 
         .detail-nav-links {
             display: flex;
             align-items: center;
+            gap: 1.5rem;
         }
 
         .detail-nav-links a {
-            margin-left: 1.5625rem;
             text-decoration: none;
-            color: #333;
+            color: var(--text-light);
             font-weight: 500;
             transition: color 0.3s;
             position: relative;
         }
 
-        .detail-nav-links a:hover {
-            color: #2a9d8f;
+        .detail-nav.scrolled .detail-nav-links a {
+            color: var(--text-color);
         }
 
-        .detail-nav-links a:hover:after {
+        .detail-nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .detail-nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -0.3125rem;
+            bottom: -4px;
             left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        .detail-nav-links a:hover::after {
             width: 100%;
-            height: 0.125rem;
-            background: #2a9d8f;
         }
 
         .hamburger {
@@ -257,8 +188,13 @@
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: #333;
+            color: var(--text-light);
             cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .detail-nav.scrolled .hamburger {
+            color: var(--text-color);
         }
 
         .mobile-nav {
@@ -266,681 +202,715 @@
             top: 5rem;
             left: 0;
             width: 100%;
-            background: white;
-            box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             display: none;
             flex-direction: column;
             z-index: 99;
         }
 
         .mobile-nav a {
-            padding: 0.9375rem 1.25rem;
+            padding: 1rem 1.5rem;
             text-decoration: none;
-            color: #333;
-            border-bottom: 0.0625rem solid #eee;
+            color: var(--text-color);
+            border-bottom: 1px solid #eee;
             transition: all 0.3s;
         }
 
         .mobile-nav a:hover {
-            background: #f8f9fa;
-            color: #2a9d8f;
-            padding-left: 1.875rem;
+            background: var(--light-bg);
+            color: var(--primary-color);
+            padding-left: 2rem;
         }
 
-        /* 热门商品部分 */
-        .featured-section {
+        /* 精品展示背景包裹层 */
+        .hero-background-wrapper {
             background: linear-gradient(to right, #1d6f64, #2a9d8f);
-            min-height: 100vh;
+            position: relative;
+            padding-top: 80px; /* 与导航栏高度匹配 */
+        }
+
+        /* 英雄区域 */
+        .featured-section {
+            min-height: 90vh;
             display: flex;
             align-items: center;
-            padding: 5rem 2.5rem;
             color: white;
         }
 
         .featured-content {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
             align-items: center;
-            justify-content: space-between;
-            max-width: 75rem;
-            margin: 0 auto;
-            width: 100%;
         }
 
-        .featured-text {
-            flex: 1;
-            padding-right: 3.125rem;
-        }
-
-        .featured-title {
-            font-size: 3.5rem;
-            margin-bottom: 1.875rem;
+        .featured-text h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
             line-height: 1.2;
         }
 
-        .featured-description {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            margin-bottom: 2.5rem;
-            max-width: 37.5rem;
-        }
-
-        .featured-btn {
-            background: white;
-            color: #2a9d8f;
-            border: none;
-            padding: 0.9375rem 2.5rem;
-            border-radius: 1.875rem;
+        .featured-text p {
             font-size: 1.125rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            box-shadow: 0 0.25rem 0.9375rem rgba(0, 0, 0, 0.2);
-        }
-
-        .featured-btn:hover {
-            transform: translateY(-0.1875rem);
-            box-shadow: 0 0.375rem 1.25rem rgba(0, 0, 0, 0.25);
-        }
-
-        .featured-image {
-            flex: 1;
-            display: flex;
-            justify-content: center;
+            line-height: 1.8;
+            margin-bottom: 2rem;
         }
 
         .featured-image img {
             max-width: 100%;
-            border-radius: 1.25rem;
-            box-shadow: 0 1.25rem 2.5rem rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: rotate(2deg);
+            transition: transform 0.5s ease;
         }
 
-        /* 原创内容部分 */
-        .original-section {
-            padding: 6.25rem 2.5rem;
-            background: #f8f9fa;
+        .featured-image img:hover {
+            transform: rotate(0) scale(1.02);
         }
 
-        .section-title {
-            text-align: center;
-            margin-bottom: 4.375rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.8rem;
-            color: #2a9d8f;
-            margin-bottom: 0.9375rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2:after {
-            content: '';
-            position: absolute;
-            bottom: -0.625rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 5rem;
-            height: 0.25rem;
-            background: #2a9d8f;
-            border-radius: 0.125rem;
-        }
-
-        .section-title .subtitle {
-            color: #666;
-            font-size: 1.2rem;
-            max-width: 43.75rem;
-            margin: 1.25rem auto 0;
-        }
-
-        .original-container {
+        /* 课程卡片 */
+        .courses-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
-            gap: 2.5rem;
-            max-width: 75rem;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
         }
 
-        .original-card {
+        .course-card {
             background: white;
-            border-radius: 1.25rem;
+            border-radius: 1rem;
             overflow: hidden;
-            box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.08);
-            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
-        .original-card:hover {
-            transform: translateY(-0.625rem);
-            box-shadow: 0 0.9375rem 2.5rem rgba(0, 0, 0, 0.15);
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
-        .card-header {
-            padding: 1.5625rem 1.875rem 0.9375rem;
-        }
-
-        .card-label {
-            font-size: 0.9rem;
-            color: #2a9d8f;
-            font-weight: 600;
-            margin-bottom: 0.625rem;
-        }
-
-        .card-title {
-            font-size: 1.8rem;
-            color: #1a2a6c;
-            margin-bottom: 0.9375rem;
-        }
-
-        .card-content {
-            padding: 0 1.875rem 1.875rem;
-        }
-
-        .card-content p {
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 1.25rem;
-        }
-
-        .card-image {
-            height: 12.5rem;
+        .course-image {
+            height: 200px;
             overflow: hidden;
+            position: relative;
         }
 
-        .card-image img {
+        .course-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
 
-        .original-card:hover .card-image img {
+        .course-card:hover .course-image img {
+            transform: scale(1.1);
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-title {
+            font-size: 1.25rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .course-description {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .course-price {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        /* 原创资源部分 */
+        .original-section {
+            padding: 5rem 0;
+            background: #fff;
+        }
+        
+        /* 新增的教学服务部分 */
+        .teaching-service {
+            background: linear-gradient(135deg, #f8f9fa, #e9f7f5);
+            padding: 5rem 0;
+            margin: 5rem 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .service-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .service-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+        
+        .service-item {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .service-text h3 {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.75rem;
+        }
+        
+        .service-text p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            font-family: 'KaiFont', KaiTi, serif; /* 使用楷体 */
+            font-size: 1.1rem;
+        }
+        
+        .service-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-image img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .service-image:hover img {
             transform: scale(1.05);
+        }
+        
+        .service-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(42, 157, 143, 0.1), rgba(26, 42, 108, 0.1));
+            z-index: 1;
+            transition: opacity 0.5s ease;
+        }
+        
+        .service-image:hover::after {
+            opacity: 0;
         }
 
         /* 页脚 */
-        .detail-footer {
-            background: #1a2a6c;
+        footer {
+            background: var(--dark-bg);
             color: rgba(255, 255, 255, 0.7);
-            padding: 3.75rem 1.25rem 1.875rem;
+            padding: 4rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo {
+            width: 3.5rem;
+            height: 3.5rem;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
         }
 
-        .copyright {
-            margin-top: 2.5rem;
-            font-size: 0.9rem;
-        }
-
-        /* 动画 */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes bounceIn {
-            0% {
-                opacity: 0;
-                transform: translateY(6.25rem);
-            }
-            60% {
-                transform: translateY(-1.25rem);
-            }
-            80% {
-                transform: translateY(0.625rem);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(3.125rem);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .footer-bottom p {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
         }
 
         /* 响应式设计 */
         @media (max-width: 992px) {
-            .featured-content {
-                flex-direction: column;
+            .service-container {
+                grid-template-columns: 1fr;
                 text-align: center;
             }
             
-            .featured-text {
-                padding-right: 0;
-                margin-bottom: 3.125rem;
+            .service-item {
+                flex-direction: column;
+                align-items: center;
             }
             
-            .featured-title {
-                font-size: 2.8rem;
-            }
-            
-            .intro-text {
-                font-size: 2.8rem;
+            .service-text {
+                max-width: 500px;
+                margin: 0 auto;
             }
         }
 
         @media (max-width: 768px) {
+            .detail-nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .featured-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .featured-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .mobile-nav {
+                top: 4.5rem;
+            }
+            
+            .nav-logo {
+                height: 35px;
+            }
+        }
+
+        @media (max-width: 576px) {
             html {
                 font-size: 14px;
             }
 
-            .products-container {
-                flex-direction: column;
-                padding-top: 2rem;
-            }
-            
-            .product-card {
-                width: 100%;
-                max-width: 31.25rem;
-            }
-            
-            .featured-title {
-                font-size: 2.2rem;
-            }
-            
-            .intro-text {
-                font-size: 2.2rem;
-            }
-            
             .section-title h2 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
-            
-            .nav-btn, .action-btn {
-                padding: 0.625rem 1.25rem;
-                font-size: 1rem;
-            }
-            
-            /* 导航栏响应式 */
-            .hamburger {
-                display: block;
-            }
-            
-            .detail-nav-links {
-                display: none;
+
+            .featured-text h1 {
+                font-size: 2rem;
             }
             
             .detail-nav {
-                padding: 0.9375rem 1.25rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            html {
-                font-size: 12px;
-            }
-
-            .featured-title {
-                font-size: 1.8rem;
+                padding: 1rem;
             }
             
-            .intro-text {
-                font-size: 1.8rem;
+            .nav-logo {
+                height: 30px;
             }
             
-            .section-title h2 {
-                font-size: 1.8rem;
+            .service-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
             }
             
-            .main-nav {
-                padding: 0.9375rem 1.25rem;
-            }
-            
-            .featured-section, .original-section {
-                padding: 3.75rem 1.25rem;
-            }
-            
-            .original-container {
-                grid-template-columns: 1fr;
+            .service-text h3 {
+                font-size: 1.3rem;
             }
         }
     </style>
 </head>
 <body>
-
-    <!-- 主屏幕 -->
-    <div id="main-screen">
-        <nav class="main-nav">
-            <div class="nav-logo">汇</div>
-            <button class="nav-btn" id="main-nav-btn">登录注册</button>
-        </nav>
-        
-        <div class="products-container">
-            <div class="product-card">
-                <h2 class="product-title">教师资源</h2>
-                <p class="product-description">图书匹配资料，由汇委学科工作室编写组制作</p>
-                <div class="product-price">精准搭配 丰富教育</div>
-                <ul class="product-features">
-                 
-                </ul>
-                <button class="action-btn">点击查看</button>
-            </div>
-            
-            <div class="product-card">
-                <h2 class="product-title">备考资源</h2>
-                <p class="product-description">由汇委学科工作室编写组整理</p>
-                <div class="product-price">精准搭配 丰富教育</div>
-                <ul class="product-features">
-                </ul>
-                <button class="action-btn">立即查看</button>
-            </div>
+    <!-- 导航栏 -->
+    <nav class="detail-nav">
+        <div class="nav-logo">
+            <!-- 白色SVG图标（透明背景时使用） -->
+            <img src="picture/icons/white.svg" alt="汇委学科工作室" class="logo-white">
+            <!-- 黑色SVG图标（有背景时使用） -->
+            <img src="picture/icons/black.svg" alt="汇委学科工作室" class="logo-black">
         </div>
-        
-      版权所有·未经本公司书面许可严禁任何人以任何方式直接或间接使用任何手段以任何方式使用本产品的任何部分用于任何用途·违者必究
-
-本网站所有数据及文档均受《著作权法》及相关法律法规保护，任何组织及个人不得侵权，违者本公司将严厉依法追究侵权责任，特此声明。
-
-All data and documents on this website are protected by the Copyright Law and relevant laws and regulations. No organization or individual may infringe upon them.
-
-The company will severely investigate and hold violators liable for infringement, hereby declared.
-
-
-        
-        <footer class="main-footer">
-            © 2022-2025 汇委学科工作室 版权所有 | HUIWEI EDUCATION
-        </footer>
+        <div class="detail-nav-links">
+            <a href="#featured">热门课程</a>
+            <a href="#courses">原创资源</a>
+            <a href="#teaching-service">教学服务</a>
+            <a href="#contact">预约体验</a>
+        </div>
+        <button class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+    
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#featured">热门课程</a>
+        <a href="#courses">原创资源</a>
+        <a href="#teaching-service">教学服务</a>
+        <a href="#contact">预约体验</a>
     </div>
-
-    <!-- 第四部分：详细内容屏幕 -->
-    <div id="detail-screen">
-        <nav class="detail-nav">
-            <div class="detail-logo">汇</div>
-            <div class="detail-nav-links">
-                <a href="#featured">教学资源</a>
-                <a href="#original">历年真题</a>
-                <a href="#contact">模拟考试</a>
+    
+    <!-- 精品展示背景包裹层 -->
+    <div class="hero-background-wrapper">
+        <!-- 英雄区域 -->
+        <section class="featured-section" id="featured">
+            <div class="container">
+                <div class="featured-content">
+                    <div class="featured-text">
+                        <h1>《备考校验》</h1>
+                        <p>六月初强盛归来！汇集中考教学经验，由汇委学科工作室团队打造的全方位冲刺方案。通过科学的复习计划、精准的考点预测和高效的解题技巧，帮助学生在最后阶段实现突破。</p>
+                        <a href="_" class="btn btn-primary">查看详细内容</a>
+                    </div>
+                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                    <div class="featured-image">
+                        <img src="picture/banner/beik.png" alt="备考校验">
+                    </div></a>
+                </div>
             </div>
-            <button class="hamburger" id="hamburger">
-                <i class="fas fa-bars"></i>
-            </button>
-        </nav>
-        
-        <div class="mobile-nav" id="mobileNav">
-            <a href="#featured">教学资源</a>
-            <a href="#original">历年真题</a>
-            <a href="#contact">模拟考试</a>
-        </div>
-        
-        
-        <section class="original-section" id="original">
+        </section>
+    </div>
+    
+    <!-- 第一个原创资源部分 -->
+    <section class="original-section" id="courses">
+        <div class="container">
             <div class="section-title">
                 <h2>汇委原创资源</h2>
-                <p class="subtitle">专业团队打造，品质保证</p>
+                <p>专业团队打造，品质保证</p>
             </div>
             
-            <div class="original-container">
-                <div class="original-card">
-                    <div class="card-header">
-                        <div class="card-label">汇委原创</div>
-                        <h3 class="card-title">优质教辅</h3>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&w=800&q=80" alt="优质教材">
+                        <span class="course-badge">热门</span>
                     </div>
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&w=800&q=80" alt="教材">
-                    </div>
-                    <div class="card-content">
-                        <p>由特级教师团队编写的系列教材，紧扣教学大纲，结合多年教学经验，帮助学生系统掌握知识点。</p>
-                        <button class="action-btn">查看详情</button>
+                    <div class="course-content">
+                        <h3 class="course-title">优质教材</h3>
+                        <p class="course-description">由特级教师团队编写的系列教材，紧扣教学大纲，结合多年教学经验，帮助学生系统掌握知识点。</p>
+                        <div class="course-footer">
+                            <span class="course-price">¥199</span>
+                            <a href="#" class="btn btn-primary">查看详情</a>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="original-card">
-                    <div class="card-header">
-                        <div class="card-label">汇委原创</div>
-                        <h3 class="card-title">教学资源</h3>
-                    </div>
-                    <div class="card-image">
+                <div class="course-card">
+                    <div class="course-image">
                         <img src="https://images.unsplash.com/photo-1501504905252-473c47e087b8?auto=format&fit=crop&w=800&q=80" alt="教学资源">
+                        <span class="course-badge">新课</span>
                     </div>
-                    <div class="card-content">
-                        <p>丰富的教学资源库，包括课件、习题集、模拟试卷等，满足不同学生的学习需求。</p>
-                        <button class="action-btn">查看详情</button>
+                    <div class="course-content">
+                        <h3 class="course-title">教学资源</h3>
+                        <p class="course-description">丰富的教学资源库，包括课件、习题集、模拟试卷等，满足不同学生的学习需求。</p>
+                        <div class="course-footer">
+                            <span class="course-price">¥299</span>
+                            <a href="#" class="btn btn-primary">查看详情</a>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="original-card">
-                    <div class="card-header">
-                        <div class="card-label">汇委原创</div>
-                        <h3 class="card-title">教学服务</h3>
-                    </div>
-                    <div class="card-image">
+                <div class="course-card">
+                    <div class="course-image">
                         <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80" alt="教学服务">
                     </div>
-                    <div class="card-content">
-                        <p>全方位的教学服务体系，包括学习规划、进度跟踪、心理辅导等，为学生提供全面支持。</p>
-                        <button class="action-btn">查看详情</button>
+                    <div class="course-content">
+                        <h3 class="course-title">教学服务</h3>
+                        <p class="course-description">全方位的教学服务体系，包括学习规划、进度跟踪、心理辅导等，为学生提供全面支持。</p>
+                        <div class="course-footer">
+                            <span class="course-price">¥399</span>
+                            <a href="#" class="btn btn-primary">查看详情</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-        
-        <section class="original-section" id="original2">
+        </div>
+    </section>
+    
+    <!-- 第二个原创资源部分 -->
+    <section class="original-section" id="courses2">
+        <div class="container">
             <div class="section-title">
-                <h2>汇委原创资源</h2>
-                <p class="subtitle">持续更新，满足多样需求</p>
+                <h2>更多原创资源</h2>
+                <p>持续更新，满足学习需求</p>
             </div>
             
-                
-                
-                <div class="original-card">
-                    <div class="card-header">
-                        <div class="card-label">汇委原创</div>
-                        <h3 class="card-title">资源分享</h3>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1548407260-da850faa41e3?auto=format&fit=crop&w=800&q=80" alt="在线课程">
                     </div>
-                    <div class="card-image">
+                    <div class="course-content">
+                        <h3 class="course-title">在线课程</h3>
+                        <p class="course-description">灵活便捷的在线课程，随时随地学习，支持回放和互动，让学习不受时间和空间限制。</p>
+                        <div class="course-footer">
+                            <span class="course-price">¥499</span>
+                            <a href="#" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80" alt="名师讲座">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">名师讲座</h3>
+                        <p class="course-description">定期举办的名师讲座，分享学习方法和考试技巧，拓宽学生视野，提升学习效率。</p>
+                        <div class="course-footer">
+                            <span class="course-price">¥199</span>
+                            <a href="#" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-image">
                         <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=800&q=80" alt="学习社区">
                     </div>
-                    <div class="card-content">
-                        <p>活跃的学习社区，学生可以交流学习心得，互相帮助，共同进步，建立良好的学习氛围。</p>
-                        <button class="action-btn">查看详情</button>
+                    <div class="course-content">
+                        <h3 class="course-title">学习社区</h3>
+                        <p class="course-description">活跃的学习社区，学生可以交流学习心得，互相帮助，共同进步，建立良好的学习氛围。</p>
+                        <div class="course-footer">
+                            <span class="course-price">¥99</span>
+                            <a href="#" class="btn btn-primary">查看详情</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-        
-        <section class="studio-intro" id="intro">
+        </div>
+    </section>
+    
+    <!-- 新增的教学服务部分 -->
+    <section class="teaching-service" id="teaching-service">
+        <div class="container">
             <div class="section-title">
-                <h2>汇委学科工作室简介</h2>
+                <h2>汇委原创教学服务</h2>
+                <p>专业教学团队，全方位服务保障</p>
             </div>
-            <div class="intro-content">
-                <p>汇委学科工作室成立于2022年，是一家专注于山西中考教育的专业机构。工作室秉承"专注教育 用心制作"的教育口号，致力于为学生提供高质量的学科辅导和学习资源。</p>
-                <p>我们拥有一支专业的编辑与排版团队，他们具有丰富的教学经验和深厚的学科知识，能够精准把握教学重点和难点，为山西中考贡献一份力。</p>
-                <p>多年来，汇委学科工作室已帮助数千名学生提升了学习成绩，实现了升学目标。未来，我们将继续坚持教育初心，不断创新教学方法，为更多学生提供优质的教育服务。</p>
+            
+            <div class="service-container">
+                <div class="service-content">
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="service-text">
+                            <h3>个性化教学方案</h3>
+                            <p>根据每位学生的学习特点和需求，量身定制专属教学计划，因材施教，精准提升学习效果。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="service-text">
+                            <h3>系统化知识梳理</h3>
+                            <p>帮助学生构建完整的学科知识体系，梳理重点难点，强化薄弱环节，确保知识掌握全面牢固。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="service-text">
+                            <h3>全程学习跟踪</h3>
+                            <p>建立学生学习档案，定期测评学习效果，及时调整教学策略，确保学习目标顺利达成。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service-image">
+                    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80" alt="教学服务">
+                </div>
             </div>
-        </section>
-        
-        <footer class="detail-footer" id="contact">
-            <div class="copyright">
-                © 2022-2025 汇委学科工作室 版权所有 | 晋ICP备案
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">汇</div>
+                    <p>专注于山西中考。</p>
+                    <p>为莘莘学子改变命运而讲课，</p>
+                    <p>为千万学生少走弯路而著书。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#featured">热门课程</a></li>
+                        <li><a href="#courses">原创资源</a></li>
+                        <li><a href="#teaching-service">教学服务</a></li>
+                        <li><a href="#contact">预约体验</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>友情链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="http://edu.people.com.cn/" target="_blank">人民教育网</a></li>
+                        <li><a href="http://www.jyb.cn/" target="_blank">中国教育新闻网</a></li>
+                        <li><a href="https://news.qq.com/ch2/zxx" target="_blank">腾讯中考</a></li>
+                        <li><a href="https://chuzhong.eol.cn/" target="_blank">中国教育在线</a></li>
+                        <li><a href="https://edu.sina.com.cn/zhongkao/" target="_blank">新浪中考</a></li>
+                        <li><a href="https://www.xuexila.com/" target="_blank">学习网</a></li>
+                     </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> 北京市海淀区中关村大街1号</li>
+                        <li><i class="fas fa-phone mr-2"></i> 400-123-4567</li>
+                        <li><i class="fas fa-envelope mr-2"></i> contact@huiwei.com</li>
+                    </ul>
+                </div>
             </div>
-        </footer>
-    </div>
+            
+            <div class="footer-bottom">
+                <p>版权所有·未经本公司书面许可严禁任何人以任何方式直接或间接使用任何手段以任何方式使用本产品的任何部分用于任何用途·违者必究</p>
+                <p>本网站所有数据及文档均受《著作权法》及相关法律法规保护，任何组织及个人不得侵权，违者本公司将严厉依法追究侵权责任，特此声明。</p>
+                <p>All data and documents on this website are protected by the Copyright Law and relevant laws and regulations. No organization or individual may infringe upon them.</p>
+                <p>The company will severely investigate and hold violators liable for infringement, hereby declared.</p>
+                <p>汇委学科工作室 © 2025   版权所有</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // 滚动控制
-        let isScrollDisabled = false;
-        
-        // 阻止默认滚动行为
-        function preventScroll(e) {
-            if (isScrollDisabled) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-        }
-        
-        // 禁用滚动
-        function disableScroll() {
-            if (window.innerWidth >= 768) { // 仅在大屏幕上禁用滚动
-                isScrollDisabled = true;
-                document.addEventListener('wheel', preventScroll, { passive: false });
-                document.addEventListener('touchmove', preventScroll, { passive: false });
-            }
-        }
-        
-        // 启用滚动
-        function enableScroll() {
-            isScrollDisabled = false;
-            document.removeEventListener('wheel', preventScroll);
-            document.removeEventListener('touchmove', preventScroll);
-        }
-
-        // 第一部分：加载屏幕
-        document.addEventListener('DOMContentLoaded', function() {
-            disableScroll(); // 初始禁用滚动
-            
-            // 模拟加载过程
-            setTimeout(function() {
-                document.getElementById('loading-text').textContent = '已加载完成';
-                
-                // 1秒后隐藏加载屏幕并显示引言屏幕
-                setTimeout(function() {
-                    document.getElementById('loading-screen').style.opacity = '0';
-                    
-                    setTimeout(function() {
-                        document.getElementById('loading-screen').style.display = 'none';
-                        showIntroScreen();
-                    }, 800);
-                }, 1000);
-            }, 2000);
+        // 汉堡菜单切换
+        document.getElementById('hamburger').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.style.display = mobileNav.style.display === 'flex' ? 'none' : 'flex';
         });
 
-        // 显示第二部分：引言屏幕
-        function showIntroScreen() {
-            const introScreen = document.getElementById('intro-screen');
-            introScreen.style.display = 'flex';
-            
-            // 动画显示第一句话
-            setTimeout(function() {
-                const text1 = document.getElementById('text1');
-                text1.style.animation = 'bounceIn 1.2s forwards';
-                text1.style.opacity = '1';
-                
-                // 动画显示第二句话
-                setTimeout(function() {
-                    const text2 = document.getElementById('text2');
-                    text2.style.animation = 'bounceIn 1.2s forwards';
-                    text2.style.opacity = '1';
-                    
-                    // 3秒后隐藏引言屏幕并显示主屏幕
-                    setTimeout(function() {
-                        introScreen.style.opacity = '0';
-                        
-                        setTimeout(function() {
-                            introScreen.style.display = 'none';
-                            showMainScreen();
-                        }, 800);
-                    }, 3000);
-                }, 800);
-            }, 300);
-        }
-
-        // 显示第三部分：主屏幕
-        function showMainScreen() {
-            const mainScreen = document.getElementById('main-screen');
-            mainScreen.style.display = 'flex';
-            mainScreen.style.opacity = '0';
-            
-            // 淡入动画
-            setTimeout(function() {
-                mainScreen.style.opacity = '1';
-                mainScreen.style.transition = 'opacity 0.8s ease';
-            }, 100);
-            
-            // 设置按钮事件
-            document.getElementById('main-nav-btn').addEventListener('click', function() {
-                hideMainScreen();
-            });
-            
-            document.getElementById('main-action-btn').addEventListener('click', function() {
-                hideMainScreen();
-            });
-            
-            // 在小屏幕上启用滚动
-            if (window.innerWidth < 768) {
-                enableScroll();
-            }
-        }
-
-        // 隐藏主屏幕并显示详细内容
-        function hideMainScreen() {
-            const mainScreen = document.getElementById('main-screen');
-            mainScreen.style.opacity = '0';
-            
-            setTimeout(function() {
-                mainScreen.style.display = 'none';
-                showDetailScreen();
-            }, 800);
-        }
-
-        // 显示第四部分：详细内容屏幕
-        function showDetailScreen() {
-            const detailScreen = document.getElementById('detail-screen');
-            detailScreen.style.display = 'flex';
-            detailScreen.style.opacity = '0';
-            
-            // 启用滚动
-            enableScroll();
-            
-            // 淡入动画
-            setTimeout(function() {
-                detailScreen.style.opacity = '1';
-                detailScreen.style.transition = 'opacity 0.8s ease';
-                
-                // 滚动动画
-                const sections = document.querySelectorAll('.featured-section, .original-section');
-                sections.forEach(section => {
-                    section.style.opacity = '0';
-                    section.style.transform = 'translateY(1.875rem)';
-                });
-                
-                // 依次显示各部分
-                let delay = 300;
-                sections.forEach(section => {
-                    setTimeout(() => {
-                        section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                        section.style.opacity = '1';
-                        section.style.transform = 'translateY(0)';
-                    }, delay);
-                    delay += 200;
-                });
-            }, 100);
-            
-            // 设置汉堡菜单事件
-            document.getElementById('hamburger').addEventListener('click', function() {
-                const mobileNav = document.getElementById('mobileNav');
-                mobileNav.style.display = mobileNav.style.display === 'flex' ? 'none' : 'flex';
-            });
-            
-            // 移动端导航链接点击事件
-            document.querySelectorAll('.mobile-nav a').forEach(link => {
-                link.addEventListener('click', function() {
-                    document.getElementById('mobileNav').style.display = 'none';
-                });
-            });
-            
-            // 修复：监听窗口大小变化，当窗口变宽时自动隐藏移动端导航
-            window.addEventListener('resize', function() {
-                const mobileNav = document.getElementById('mobileNav');
-                if (window.innerWidth >= 768 && mobileNav.style.display === 'flex') {
-                    mobileNav.style.display = 'none';
-                }
-            });
-        }
-
-        // 窗口大小改变时处理滚动
+        // 窗口大小变化时隐藏移动端菜单
         window.addEventListener('resize', function() {
-            if (document.getElementById('main-screen').style.display === 'flex') {
-                if (window.innerWidth < 768) {
-                    enableScroll();
-                } else {
-                    disableScroll();
-                }
+            const mobileNav = document.getElementById('mobileNav');
+            if (window.innerWidth >= 768 && mobileNav.style.display === 'flex') {
+                mobileNav.style.display = 'none';
             }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // 考虑导航栏高度
+                        behavior: 'smooth'
+                    });
+                    
+                    // 如果是移动端，点击后关闭菜单
+                    const mobileNav = document.getElementById('mobileNav');
+                    if (mobileNav.style.display === 'flex') {
+                        mobileNav.style.display = 'none';
+                    }
+                }
+            });
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.detail-nav');
+            const scrollPosition = window.scrollY;
+            
+            // 当滚动位置大于100px时，导航栏变为白色半透明
+            if (scrollPosition > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                // 当滚动位置小于等于100px时，导航栏变为透明
+                nav.classList.remove('scrolled');
+            }
+        });
+        
+        // 图片动画效果
+        document.querySelectorAll('.service-image').forEach(image => {
+            image.addEventListener('mouseenter', function() {
+                this.querySelector('img').style.transform = 'scale(1.05)';
+                this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.2)';
+            });
+            
+            image.addEventListener('mouseleave', function() {
+                this.querySelector('img').style.transform = 'scale(1)';
+                this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.1)';
+            });
         });
     </script>
 </body>
-</html>    
+</html>
