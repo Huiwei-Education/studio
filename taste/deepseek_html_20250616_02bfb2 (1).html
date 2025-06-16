@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智学教育 - 精品课程免费体验</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 20%);
+            z-index: -1;
+        }
+        
+        /* 导航栏样式 */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo svg {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: white;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* 主内容区 */
+        .container {
+            max-width: 800px;
+            margin: 120px auto 20px;
+            padding: 0 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            overflow-y: auto;
+            max-height: calc(100vh - 250px);
+        }
+        
+        .header {
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        /* 年级选择区 - 下拉列表形式 */
+        .grade-selection {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .grade-label {
+            text-align: left;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            display: block;
+        }
+        
+        .grade-select {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            color: #333; /* 改为深色文字 */
+            font-size: 1.1rem;
+            outline: none;
+            appearance: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .grade-select:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(255, 255, 255, 1);
+        }
+        
+        .grade-select:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: #1a2980;
+            box-shadow: 0 0 0 3px rgba(26, 41, 128, 0.2);
+        }
+        
+        .select-arrow {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #333; /* 箭头颜色改为深色 */
+        }
+        
+        /* 邀请码输入区 */
+        .invite-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            margin: 15px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .invite-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            display: flex;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .input-group input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px 0 0 12px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+            min-width: 200px;
+        }
+        
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .input-group button {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 0 12px 12px 0;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .input-group button:hover {
+            background: linear-gradient(135deg, #ff5252 0%, #ff7b3d 100%);
+            transform: translateY(-2px);
+        }
+        
+        .input-group button:disabled {
+            background: #b8b8b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* 人机验证区 */
+        .captcha-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .captcha-checkbox {
+            width: 25px;
+            height: 25px;
+            border: 2px solid white;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .captcha-checkbox:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .captcha-checkbox.checked {
+            background: #4CAF50;
+            border-color: #4CAF50;
+        }
+        
+        .captcha-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* 获取码区域 */
+        .access-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .access-code {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 25px;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: inline-block;
+            color: #ffd700;
+            font-family: monospace;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 35px;
+            background: linear-gradient(135deg, #4CAF50 0%, #2E8B57 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            background: linear-gradient(135deg, #43A047 0%, #2E7D32 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* 加载状态 */
+        .loader {
+            display: none;
+            margin: 20px auto;
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 5px solid #ffffff;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 状态消息 */
+        .status-message {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            text-align: left;
+            font-size: 1rem;
+        }
+        
+        .status-message.error {
+            background: rgba(255, 99, 71, 0.2);
+            border: 1px solid rgba(255, 99, 71, 0.5);
+        }
+        
+        .status-message.success {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid rgba(46, 204, 113, 0.5);
+        }
+        
+        /* 底部版权信息 */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 25px 20px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+        
+        .copyright-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .copyright-lines p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .container {
+                margin-top: 160px;
+                max-height: calc(100vh - 280px);
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .invite-section {
+                padding: 20px;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .input-group input,
+            .input-group button {
+                border-radius: 12px;
+                width: 100%;
+                margin: 5px 0;
+            }
+            
+            .input-group button {
+                padding: 15px;
+            }
+            
+            .access-code {
+                font-size: 1.8rem;
+                padding: 10px 20px;
+            }
+            
+            .btn {
+                padding: 12px 30px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header p {
+                font-size: 0.95rem;
+            }
+            
+            .invite-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .copyright-lines p {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="logo">
+            <svg viewBox="0 0 100 20">
+                <rect x="10" y="5" width="80" height="10" rx="2" fill="#fff" />
+                <rect x="15" y="7" width="70" height="6" rx="1" fill="#1a2980" />
+            </svg>
+            <span>智学教育</span>
+        </div>
+        <div class="nav-links">
+            <a href="#">首页</a>
+            <a href="#">课程介绍</a>
+            <a href="#">教师团队</a>
+            <a href="#">成功案例</a>
+            <a href="#">联系我们</a>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <div class="header">
+            <h1>精品课程免费体验</h1>
+            <p>选择您所在的年级，输入邀请码即可免费体验我们的精品课程。体验课程包含各年级重点知识点讲解和精选习题。</p>
+        </div>
+
+        <!-- 年级选择 - 下拉列表形式 -->
+        <div class="grade-selection">
+            <label for="gradeSelect" class="grade-label">选择年级：</label>
+            <div style="position: relative;">
+                <select id="gradeSelect" class="grade-select">
+                    <option value="" disabled selected>请选择您的年级</option>
+                    <option value="7">七年级</option>
+                    <option value="8">八年级</option>
+                    <option value="9">九年级</option>
+                </select>
+                <div class="select-arrow">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 邀请码输入 -->
+        <div class="invite-section">
+            <h2>请输入您的邀请码</h2>
+            <div class="input-group">
+                <input type="text" id="inviteCode" placeholder="输入您的邀请码...">
+                <button id="verifyBtn">验证邀请码</button>
+            </div>
+            <div class="loader" id="loader"></div>
+            <div class="status-message" id="statusMessage"></div>
+        </div>
+
+        <!-- 人机验证 -->
+        <div class="captcha-section" id="captchaSection">
+            <h3>人机验证</h3>
+            <p>请点击下方复选框以确认您不是机器人</p>
+            <div class="captcha-box">
+                <div class="captcha-checkbox" id="captchaCheckbox"></div>
+                <span>我不是机器人</span>
+            </div>
+        </div>
+
+        <!-- 获取码区域 -->
+        <div class="access-section" id="accessSection">
+            <h2>您的课程获取码</h2>
+            <div class="access-code" id="accessCode">等待生成...</div>
+            <p>请复制上方获取码，点击下方按钮开始体验课程</p>
+            <a href="#" class="btn" id="accessBtn">前往体验课程</a>
+            <p class="info-text" style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">
+                提示：体验链接为 <span id="linkPreview" style="font-family: monospace; color: #ffd700;">https://www.123pan.com/s/aBTyjv-</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- 底部版权信息 -->
+    <footer>
+        <div class="copyright-lines">
+            <p>智学教育工作室 © 2023 版权所有</p>
+            <p>地址：北京市海淀区教育科技园区88号智慧大厦15层</p>
+            <p>联系电话：010-88889999 | 邮箱：contact@zhixue-edu.com</p>
+            <p>京ICP备12345678号-1 | 京公网安备11010802023456号</p>
+            <p>本网站所有课程内容及资料均为智学教育工作室原创，未经许可不得转载或用于商业用途</p>
+        </div>
+    </footer>
+
+    <script>
+        // 当前选中的年级
+        let selectedGrade = null;
+        
+        // 存储有效的邀请码
+        let validInviteCodes = [];
+        
+        // 从all.txt加载邀请码（使用相对路径）
+        async function loadInviteCodes() {
+            try {
+                const response = await fetch('all.txt');
+                if (!response.ok) {
+                    throw new Error('无法加载邀请码文件');
+                }
+                
+                const text = await response.text();
+                validInviteCodes = text.split('\n')
+                    .map(code => code.trim())
+                    .filter(code => code.length > 0);
+                
+                console.log('成功加载邀请码:', validInviteCodes);
+                
+                // 如果文件为空，使用默认邀请码
+                if (validInviteCodes.length === 0) {
+                    validInviteCodes = ['EDU2023', 'LEARN999', 'FREE888', 'ZHIXUE777', 'VIP666'];
+                    console.log('使用默认邀请码:', validInviteCodes);
+                }
+            } catch (error) {
+                console.error('加载邀请码失败:', error);
+                // 使用默认邀请码作为后备
+                validInviteCodes = ['EDU2023', 'LEARN999', 'FREE888', 'ZHIXUE777', 'VIP666'];
+                showMessage('系统提示：使用默认邀请码库', 'error');
+            }
+        }
+        
+        // 页面加载时加载邀请码
+        window.addEventListener('DOMContentLoaded', loadInviteCodes);
+        
+        // 年级选择事件
+        document.getElementById('gradeSelect').addEventListener('change', function() {
+            selectedGrade = this.value;
+            resetVerification();
+        });
+        
+        // 验证按钮事件
+        document.getElementById('verifyBtn').addEventListener('click', verifyInviteCode);
+        
+        // 人机验证事件
+        document.getElementById('captchaCheckbox').addEventListener('click', function() {
+            this.classList.toggle('checked');
+        });
+        
+        // 验证邀请码函数
+        function verifyInviteCode() {
+            const inviteCode = document.getElementById('inviteCode').value.trim();
+            const loader = document.getElementById('loader');
+            const statusMessage = document.getElementById('statusMessage');
+            
+            // 验证输入
+            if (!selectedGrade) {
+                showMessage('请先选择年级', 'error');
+                return;
+            }
+            
+            if (!inviteCode) {
+                showMessage('请输入邀请码', 'error');
+                return;
+            }
+            
+            // 显示加载动画
+            loader.style.display = 'block';
+            statusMessage.style.display = 'none';
+            document.getElementById('verifyBtn').disabled = true;
+            
+            // 模拟服务器验证
+            setTimeout(() => {
+                loader.style.display = 'none';
+                
+                // 检查邀请码是否有效（不区分大小写）
+                const isValid = validInviteCodes.some(validCode => 
+                    validCode.toLowerCase() === inviteCode.toLowerCase()
+                );
+                
+                if (isValid) {
+                    // 验证成功
+                    showMessage('邀请码验证成功！', 'success');
+                    document.getElementById('captchaSection').style.display = 'block';
+                } else {
+                    // 验证失败
+                    showMessage('邀请码无效，请重新输入', 'error');
+                    document.getElementById('verifyBtn').disabled = false;
+                }
+            }, 1500); // 模拟网络延迟
+        }
+        
+        // 显示消息函数
+        function showMessage(text, type) {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.textContent = text;
+            statusMessage.className = 'status-message ' + type;
+            statusMessage.style.display = 'block';
+            
+            // 自动隐藏成功消息
+            if (type === 'success') {
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            }
+        }
+        
+        // 重置验证状态
+        function resetVerification() {
+            document.getElementById('captchaSection').style.display = 'none';
+            document.getElementById('accessSection').style.display = 'none';
+            document.getElementById('captchaCheckbox').classList.remove('checked');
+            document.getElementById('verifyBtn').disabled = false;
+            document.getElementById('statusMessage').style.display = 'none';
+        }
+        
+        // 观察人机验证状态
+        setInterval(() => {
+            const captchaChecked = document.getElementById('captchaCheckbox').classList.contains('checked');
+            const accessSection = document.getElementById('accessSection');
+            
+            if (captchaChecked && selectedGrade && (!accessSection.style.display || accessSection.style.display === 'none')) {
+                accessSection.style.display = 'block';
+                
+                // 根据年级设置获取码和链接
+                const accessCodes = {
+                    '7': '7ABC-123-XYZ',
+                    '8': '8DEF-456-UVW',
+                    '9': '9GHI-789-RST'
+                };
+                
+                const gradeLinks = {
+                    '7': '7grade?',
+                    '8': '8grade?',
+                    '9': '9grade?'
+                };
+                
+                const accessCode = accessCodes[selectedGrade];
+                const gradeLink = gradeLinks[selectedGrade];
+                const baseUrl = 'https://www.123pan.com/s/aBTyjv-';
+                const fullLink = baseUrl + gradeLink;
+                
+                document.getElementById('accessCode').textContent = accessCode;
+                document.getElementById('accessBtn').href = fullLink;
+                document.getElementById('linkPreview').textContent = fullLink;
+            }
+        }, 500);
+    </script>
+</body>
+</html>
