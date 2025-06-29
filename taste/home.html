@@ -650,7 +650,7 @@
                 
                 if (isValid) {
                     // 验证成功
-                    showMessage('邀请码验证成功！', 'success');
+                    showMessage('邀请码验证成功！\n 向下滑动继续进行人机验证', 'success');
                     document.getElementById('captchaSection').style.display = 'block';
                 } else {
                     // 验证失败
@@ -694,15 +694,15 @@
                 
                 // 根据年级设置获取码和链接
                 const accessCodes = {
-                    '7': 'Jeq8',
+                    '7': '9fc5',
                     '8': 'wXN5',
-                    '9': '9fc5'
+                    '9': 'Jeq8'
                 };
                 
                 const gradeLinks = {
-                    '7': 'QGwJA?',
+                    '7': 'kGwJA?',
                     '8': 'EGwJA?',
-                    '9': 'kGwJA?'
+                    '9': 'QGwJA?'
                 };
                 
                 const accessCode = accessCodes[selectedGrade];
