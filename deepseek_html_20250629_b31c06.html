@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汇委学科工作室</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 原有样式保持不变 */
+        @font-face {
+            font-family: 'KaiFont';
+            src: url('/font/kai.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        :root {
+            --primary-color: #2a9d8f;
+            --secondary-color: #1a2a6c;
+            --accent-color: #e76f51;
+            --light-bg: #f8f9fa;
+            --dark-bg: #121212;
+            --text-color: #333;
+            --text-light: #fff;
+            --text-gray: #666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        .btn-primary:hover {
+            background-color: #1d6f64;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .section-title p {
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 1.25rem auto 0;
+        }
+
+        /* 导航栏样式 - 优化了背景和阴影 */
+        .detail-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .detail-nav.scrolled {
+            background: rgba(255, 255, 255, 0.8); /* 更浅的背景 */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.22); /* 更重的阴影 */
+        }
+
+        /* 导航栏图标样式 */
+        .nav-logo {
+            height: 40px; /* 固定高度 */
+            transition: all 0.3s ease;
+        }
+        
+        .nav-logo img {
+            height: 100%;
+            width: auto;
+            transition: opacity 0.3s ease;
+        }
+        
+        .logo-white {
+            position: absolute;
+            opacity: 1;
+        }
+        
+        .logo-black {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .detail-nav.scrolled .logo-white {
+            opacity: 0;
+        }
+        
+        .detail-nav.scrolled .logo-black {
+            opacity: 1;
+        }
+
+        .detail-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .detail-nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .detail-nav.scrolled .detail-nav-links a {
+            color: var(--text-color);
+        }
+
+        .detail-nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .detail-nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        .detail-nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .detail-nav.scrolled .hamburger {
+            color: var(--text-color);
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 5rem;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            z-index: 99;
+        }
+
+        .mobile-nav a {
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: var(--text-color);
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s;
+        }
+
+        .mobile-nav a:hover {
+            background: var(--light-bg);
+            color: var(--primary-color);
+            padding-left: 2rem;
+        }
+
+        /* 精品展示背景包裹层 */
+        .hero-background-wrapper {
+            background: linear-gradient(to right, #1d6f64, #2a9d8f);
+            position: relative;
+            padding-top: 80px; /* 与导航栏高度匹配 */
+        }
+
+        /* 英雄区域 */
+        .featured-section {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .featured-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .featured-text h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .featured-text p {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .featured-image img {
+            max-width: 100%;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: rotate(2deg);
+            transition: transform 0.5s ease;
+        }
+
+        .featured-image img:hover {
+            transform: rotate(0) scale(1.02);
+        }
+
+        /* 课程卡片 */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .course-card:hover .course-image img {
+            transform: scale(1.1);
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-title {
+            font-size: 1.25rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .course-description {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .course-price {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        /* 原创资源部分 */
+        .original-section {
+            padding: 5rem 0;
+            background: #fff;
+        }
+        
+        /* 新增的教学服务部分 */
+        .teaching-service {
+            background: linear-gradient(135deg, #f8f9fa, #e9f7f5);
+            padding: 5rem 0;
+            margin: 5rem 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .service-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .service-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+        
+        .service-item {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .service-text h3 {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.75rem;
+        }
+        
+        .service-text p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            font-family: 'KaiFont', KaiTi, serif; /* 使用楷体 */
+            font-size: 1.1rem;
+        }
+        
+        .service-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-image img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .service-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .service-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(42, 157, 143, 0.1), rgba(26, 42, 108, 0.1));
+            z-index: 1;
+            transition: opacity 0.5s ease;
+        }
+        
+        .service-image:hover::after {
+            opacity: 0;
+        }
+
+        /* 页脚 */
+        footer {
+            background: var(--dark-bg);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 4rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo {
+            width: 3.5rem;
+            height: 3.5rem;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .service-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .service-item {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .service-text {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .detail-nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .featured-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .featured-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .mobile-nav {
+                top: 4.5rem;
+            }
+            
+            .nav-logo {
+                height: 35px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            html {
+                font-size: 14px;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .featured-text h1 {
+                font-size: 2rem;
+            }
+            
+            .detail-nav {
+                padding: 1rem;
+            }
+            
+            .nav-logo {
+                height: 30px;
+            }
+            
+            .service-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .service-text h3 {
+                font-size: 1.3rem;
+            }
+        }
+        
+        /* 新增：免费课程体验区域样式 */
+        #free-taste {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, #1a2a6c, #2a9d8f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+        
+        .free-taste-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            color: white;
+            z-index: 2;
+        }
+        
+        .free-taste-content {
+            padding: 2rem;
+        }
+        
+        .free-taste-content h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .free-taste-content h2 span {
+            color: var(--accent-color);
+        }
+        
+        .free-taste-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .free-taste-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease;
+            max-width: 100%;
+        }
+        
+        .free-taste-image img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .free-taste-image:hover {
+            transform: translateY(-10px);
+        }
+        
+        .free-taste-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .taste-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(231, 111, 81, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .taste-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: width 0.5s ease;
+            z-index: -1;
+        }
+        
+        .taste-btn:hover:before {
+            width: 100%;
+        }
+        
+        .taste-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(231, 111, 81, 0.5);
+        }
+        
+        .taste-btn i {
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .taste-btn:hover i {
+            transform: translateX(5px);
+        }
+        
+        .free-taste-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .free-taste-bg .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            animation: float 12s infinite ease-in-out;
+        }
+        
+        .free-taste-bg .circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .free-taste-bg .circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: 15%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+        
+        .free-taste-bg .circle:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 30%;
+            right: 20%;
+            animation-delay: 4s;
+        }
+        
+        .free-taste-bg .circle:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 6s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.8;
+            }
+            25% {
+                transform: translate(10px, -15px) scale(1.05);
+                opacity: 0.9;
+            }
+            50% {
+                transform: translate(-15px, 10px) scale(0.95);
+                opacity: 0.7;
+            }
+            75% {
+                transform: translate(15px, 15px) scale(1.03);
+                opacity: 0.85;
+            }
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .free-taste-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .free-taste-content h2 {
+                font-size: 2.5rem;
+            }
+            
+            .free-taste-content p {
+                font-size: 1.1rem;
+            }
+            
+            /* 确保在移动端有足够空间显示内容 */
+            #free-taste {
+                min-height: auto;
+                height: auto;
+                padding: 4rem 0;
+            }
+            
+            .free-taste-image {
+                max-width: 80%;
+                margin: 0 auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .free-taste-content h2 {
+                font-size: 2rem;
+            }
+            
+            .taste-btn {
+                padding: 0.9rem 1.8rem;
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .free-taste-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .free-taste-content p {
+                font-size: 1rem;
+            }
+            
+            #free-taste {
+                padding: 3rem 0;
+            }
+        }
+        
+        @media (max-height: 700px) and (min-width: 993px) {
+            /* 当高度较小时确保内容完整显示 */
+            #free-taste {
+                min-height: auto;
+                height: auto;
+                padding: 4rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="detail-nav">
+        <div class="nav-logo">
+            <!-- 白色SVG图标（透明背景时使用） -->
+            <img src="picture/icons/white.svg" alt="汇委学科工作室" class="logo-white">
+            <!-- 黑色SVG图标（有背景时使用） -->
+            <img src="picture/icons/black.svg" alt="汇委学科工作室" class="logo-black">
+        </div>
+        <div class="detail-nav-links">
+            <a href="#featured">热门课程</a>
+            <a href="#courses">原创资源</a>
+            <a href="#free-taste">免费体验</a> <!-- 新增导航链接 -->
+            <a href="#teaching-service">教学服务</a>
+            <a href="#contact">预约体验</a>
+        </div>
+        <button class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+    
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#featured">热门课程</a>
+        <a href="#courses">原创资源</a>
+        <a href="#free-taste">免费体验</a> <!-- 新增移动端导航链接 -->
+        <a href="#teaching-service">教学服务</a>
+        <a href="#contact">预约体验</a>
+    </div>
+    
+    <!-- 精品展示背景包裹层 -->
+    <div class="hero-background-wrapper">
+        <!-- 英雄区域 -->
+        <section class="featured-section" id="featured">
+            <div class="container">
+                <div class="featured-content">
+                    <div class="featured-text">
+                        <h1>《备考校验》</h1>
+                        <p>六月初强盛归来！汇集中考教学经验，由汇委学科工作室团队打造的全方位冲刺方案。通过科学的复习计划、精准的考点预测和高效的解题技巧，帮助学生在最后阶段实现突破。</p>
+                        <a href="_" class="btn btn-primary">查看详细内容</a>
+                    </div>
+                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                    <div class="featured-image">
+                        <img src="picture/banner/beik.png" alt="备考校验">
+                    </div></a>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- 第一个原创资源部分 -->
+    <section class="original-section" id="courses">
+        <div class="container">
+            <div class="section-title">
+                <h2>汇委原创教育资源</h2>
+                <p>专业团队打造，品质保证</p>
+            </div>
+            
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&w=800&q=80" alt="优质教材">
+                        <span class="course-badge">热门</span>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">优质教材</h3>
+                        <p class="course-description">由特级教师团队编写的系列教材，紧扣教学大纲，结合多年教学经验，帮助学生系统掌握知识点。</p>
+                        <div class="course-footer">
+                            <span class="course-price">¥199</span>
+                            <a href="#" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1501504905252-473c47e087b8?auto=format&fit=crop&w=800&q=80" alt="教学资源">
+                        <span class="course-badge">新课</span>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">教学资源</h3>
+                        <p class="course-description">丰富的教学资源库，包括课件、习题集、模拟试卷等，满足不同学生的学习需求。</p>
+                        <div class="course-footer">
+                            <span class="course-price">¥299</span>
+                            <a href="#" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80" alt="教学服务">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">教学服务</h3>
+                        <p class="course-description">全方位的教学服务体系，包括学习规划、进度跟踪、心理辅导等，为学生提供全面支持。</p>
+                        <div class="course-footer">
+                            <span class="course-price">¥399</span>
+                            <a href="#" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 第二个原创资源部分 -->
+    <section class="original-section" id="courses2">
+        <div class="container">
+            <div class="section-title">
+                <h2>汇委原创优质内容</h2>
+                <p>持续更新，满足学习需求</p>
+            </div>
+            
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1548407260-da850faa41e3?auto=format&fit=crop&w=800&q=80" alt="在线课程">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">在线课程</h3>
+                        <p class="course-description">灵活便捷的在线课程，随时随地学习，支持回放和互动，让学习不受时间和空间限制。</p>
+                        <div class="course-footer">
+                            <span class="course-price">¥499</span>
+                            <a href="#" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80" alt="名师讲座">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">名师讲座</h3>
+                        <p class="course-description">定期举办的名师讲座，分享学习方法和考试技巧，拓宽学生视野，提升学习效率。</p>
+                        <div class="course-footer">
+                            <span class="course-price">¥199</span>
+                            <a href="#" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=800&q=80" alt="学习社区">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">学习社区</h3>
+                        <p class="course-description">活跃的学习社区，学生可以交流学习心得，互相帮助，共同进步，建立良好的学习氛围。</p>
+                        <div class="course-footer">
+                            <span class="course-price">¥99</span>
+                            <a href="#" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 新增：免费课程体验区域 -->
+    <section id="free-taste">
+        <div class="free-taste-bg">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <div class="free-taste-container">
+            <div class="free-taste-content">
+                <h2>免费课程<span>体验区</span></h2>
+                <p>现在即可体验汇委学科工作室精心打造的优质课程资源！我们提供完全免费的体验课程，让您无需任何成本就能感受我们的教学品质。</p>
+                <p>无论您是学生还是家长，都可以通过这个体验区了解我们的教学理念、课程内容和教学方式。体验课程包含多个学科的核心知识点讲解和精选习题解析。</p>
+                <a href="https://huiwei-education.github.io/studio/taste/home.html" target="_blank" class="taste-btn">
+                    立即体验 <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="free-taste-image">
+                <!-- 修改为指定图片路径 -->
+                <img src="picture/taste.png" alt="免费课程体验">
+            </div>
+        </div>
+    </section>
+    
+    <!-- 新增的教学服务部分 -->
+    <section class="teaching-service" id="teaching-service">
+        <div class="container">
+            <div class="section-title">
+                <h2>为何选择我们？</h2>
+                <p>专业教学团队，全方位服务保障</p>
+            </div>
+            
+            <div class="service-container">
+                <div class="service-content">
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="service-text">
+                            <h3>个性化教学方案</h3>
+                            <p>根据每位学生的学习特点和需求，量身定制专属教学计划，因材施教，精准提升学习效果。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="service-text">
+                            <h3>系统化知识梳理</h3>
+                            <p>帮助学生构建完整的学科知识体系，梳理重点难点，强化薄弱环节，确保知识掌握全面牢固。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="service-text">
+                            <h3>全程学习跟踪</h3>
+                            <p>建立学生学习档案，定期测评学习效果，及时调整教学策略，确保学习目标顺利达成。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service-image">
+                    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80" alt="教学服务">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">汇</div>
+                    <p>专注于山西中考。</p>
+                    <p>为莘莘学子改变命运而讲课，</p>
+                    <p>为千万学生少走弯路而著书。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#featured">热门课程</a></li>
+                        <li><a href="#courses">原创资源</a></li>
+                        <li><a href="#free-taste">免费体验</a></li> <!-- 更新页脚链接 -->
+                        <li><a href="#teaching-service">教学服务</a></li>
+                        <li><a href="#contact">预约体验</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>友情链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="http://edu.people.com.cn/" target="_blank">人民教育网</a></li>
+                        <li><a href="http://www.jyb.cn/" target="_blank">中国教育新闻网</a></li>
+                        <li><a href="https://news.qq.com/ch2/zxx" target="_blank">腾讯中考</a></li>
+                        <li><a href="https://chuzhong.eol.cn/" target="_blank">中国教育在线</a></li>
+                        <li><a href="https://edu.sina.com.cn/zhongkao/" target="_blank">新浪中考</a></li>
+                        <li><a href="https://www.xuexila.com/" target="_blank">学习网</a></li>
+                     </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> 北京市海淀区中关村大街1号</li>
+                        <li><i class="fas fa-phone mr-2"></i> 400-123-4567</li>
+                        <li><i class="fas fa-envelope mr-2"></i> contact@huiwei.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>版权所有·未经本公司书面许可严禁任何人以任何方式直接或间接使用任何手段以任何方式使用本产品的任何部分用于任何用途·违者必究</p>
+                <p>本网站所有数据及文档均受《著作权法》及相关法律法规保护，任何组织及个人不得侵权，违者本公司将严厉依法追究侵权责任，特此声明。</p>
+                <p>All data and documents on this website are protected by the Copyright Law and relevant laws and regulations. No organization or individual may infringe upon them.</p>
+                <p>The company will severely investigate and hold violators liable for infringement, hereby declared.</p>
+                <p>汇委学科工作室 © 2025   版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 汉堡菜单切换
+        document.getElementById('hamburger').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.style.display = mobileNav.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // 窗口大小变化时隐藏移动端菜单
+        window.addEventListener('resize', function() {
+            const mobileNav = document.getElementById('mobileNav');
+            if (window.innerWidth >= 768 && mobileNav.style.display === 'flex') {
+                mobileNav.style.display = 'none';
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // 考虑导航栏高度
+                        behavior: 'smooth'
+                    });
+                    
+                    // 如果是移动端，点击后关闭菜单
+                    const mobileNav = document.getElementById('mobileNav');
+                    if (mobileNav.style.display === 'flex') {
+                        mobileNav.style.display = 'none';
+                    }
+                }
+            });
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.detail-nav');
+            const scrollPosition = window.scrollY;
+            
+            // 当滚动位置大于100px时，导航栏变为白色半透明
+            if (scrollPosition > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                // 当滚动位置小于等于100px时，导航栏变为透明
+                nav.classList.remove('scrolled');
+            }
+        });
+        
+        // 图片动画效果
+        document.querySelectorAll('.service-image').forEach(image => {
+            image.addEventListener('mouseenter', function() {
+                this.querySelector('img').style.transform = 'scale(1.05)';
+                this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.2)';
+            });
+            
+            image.addEventListener('mouseleave', function() {
+                this.querySelector('img').style.transform = 'scale(1)';
+                this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.1)';
+            });
+        });
+        
+        // 免费体验区域背景动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const circles = document.querySelectorAll('.free-taste-bg .circle');
+            
+            function animateCircles() {
+                circles.forEach(circle => {
+                    // 随机移动
+                    const x = Math.random() * 20 - 10;
+                    const y = Math.random() * 20 - 10;
+                    circle.style.transform = `translate(${x}px, ${y}px)`;
+                    
+                    // 随机缩放
+                    const scale = 0.95 + Math.random() * 0.1;
+                    circle.style.transform += ` scale(${scale})`;
+                });
+                
+                requestAnimationFrame(animateCircles);
+            }
+            
+            animateCircles();
+        });
+    </script>
+</body>
+</html>
