@@ -6,7 +6,7 @@
     <title>汇委学科工作室</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* 原有样式保持不变 */
+        /* 优化后的样式 */
         @font-face {
             font-family: 'KaiFont';
             src: url('/font/kai.ttf') format('truetype');
@@ -40,6 +40,7 @@
         body {
             color: var(--text-color);
             overflow-x: hidden;
+            background-color: #fafafa;
         }
 
         .container {
@@ -97,7 +98,7 @@
             margin: 1.25rem auto 0;
         }
 
-        /* 导航栏样式 - 优化了背景和阴影 */
+        /* 导航栏样式 */
         .detail-nav {
             display: flex;
             justify-content: space-between;
@@ -113,13 +114,12 @@
         }
 
         .detail-nav.scrolled {
-            background: rgba(255, 255, 255, 0.8); /* 更浅的背景 */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.22); /* 更重的阴影 */
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.22);
         }
 
-        /* 导航栏图标样式 */
         .nav-logo {
-            height: 40px; /* 固定高度 */
+            height: 40px;
             transition: all 0.3s ease;
         }
         
@@ -224,19 +224,18 @@
             padding-left: 2rem;
         }
 
-        /* 精品展示背景包裹层 */
+        /* 精品展示区域 */
         .hero-background-wrapper {
-            background: linear-gradient(to right, #1d6f64, #2a9d8f);
+            background: linear-gradient(135deg, #ffd8a8, #ffb366);
             position: relative;
-            padding-top: 80px; /* 与导航栏高度匹配 */
+            padding-top: 80px;
         }
 
-        /* 英雄区域 */
         .featured-section {
             min-height: 90vh;
             display: flex;
             align-items: center;
-            color: white;
+            color: #333;
         }
 
         .featured-content {
@@ -247,37 +246,111 @@
         }
 
         .featured-text h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 1.5rem;
             line-height: 1.2;
+            color: #1a2a6c;
         }
 
         .featured-text p {
-            font-size: 1.125rem;
+            font-size: 1.25rem;
             line-height: 1.8;
             margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .btn-featured {
+            background-color: #1a2a6c;
+            color: white !important;
+        }
+        
+        .btn-featured:hover {
+            background-color: #0f1a4d;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
 
         .featured-image img {
             max-width: 100%;
             border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
             transform: rotate(2deg);
             transition: transform 0.5s ease;
         }
 
         .featured-image img:hover {
-            transform: rotate(0) scale(1.02);
+            transform: rotate(0) scale(1.05);
         }
 
-        /* 课程卡片 */
-        .courses-grid {
+        /* 原创资源部分 - 移除了边距 */
+        .original-section {
+            padding: 5rem 0;
+            background: #fff;
+        }
+        
+        .resources-container {
+            display: flex;
+            justify-content: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            gap: 1.5rem; /* 控制图片间距 */
+        }
+        
+        .resource-item {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: jumpIn 0.8s ease-out forwards;
+            animation-delay: calc(0.2s * var(--delay));
+            margin: 0; /* 移除外边距 */
+        }
+        
+        .resource-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        @keyframes jumpIn {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 资源卡片部分 */
+        .resource-cards-section {
+            padding: 2rem 0 5rem;
+            background: #fff;
+        }
+        
+        .resource-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
         }
-
-        .course-card {
+        
+        .resource-card {
             background: white;
             border-radius: 1rem;
             overflow: hidden;
@@ -286,84 +359,183 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease-out forwards;
         }
-
-        .course-card:hover {
+        
+        .resource-card:nth-child(1) { animation-delay: 0.1s; }
+        .resource-card:nth-child(2) { animation-delay: 0.2s; }
+        .resource-card:nth-child(3) { animation-delay: 0.3s; }
+        
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .resource-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
-
-        .course-image {
-            height: 200px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .course-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .course-card:hover .course-image img {
-            transform: scale(1.1);
-        }
-
-        .course-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--accent-color);
+        
+        .resource-card-icon {
+            height: 100px;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 999px;
-            font-size: 0.875rem;
-            font-weight: 600;
+            font-size: 2.5rem;
         }
-
-        .course-content {
+        
+        .resource-card-content {
             padding: 1.5rem;
             flex: 1;
             display: flex;
             flex-direction: column;
         }
-
-        .course-title {
-            font-size: 1.25rem;
+        
+        .resource-card-title {
+            font-size: 1.5rem;
             color: var(--secondary-color);
             margin-bottom: 0.75rem;
             font-weight: 700;
+            text-align: center;
         }
-
-        .course-description {
+        
+        .resource-card-description {
             color: var(--text-gray);
             line-height: 1.6;
             margin-bottom: 1.5rem;
             flex: 1;
-        }
-
-        .course-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
-        }
-
-        .course-price {
-            color: var(--primary-color);
-            font-weight: 700;
-            font-size: 1.125rem;
-        }
-
-        /* 原创资源部分 */
-        .original-section {
-            padding: 5rem 0;
-            background: #fff;
+            text-align: center;
         }
         
-        /* 新增的教学服务部分 */
+        .resource-card-footer {
+            text-align: center;
+        }
+        
+        .resource-card-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .resource-card-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* 精选课程卡片部分 - 移除了边距 */
+        .course-cards-section {
+            padding: 5rem 0;
+            background: #f9f9f9;
+        }
+        
+        .course-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0; /* 移除了内边距 */
+        }
+        
+        .course-card {
+            position: relative;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            margin: 0; /* 移除了外边距 */
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .course-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            transition: transform 0.5s ease;
+        }
+        
+        .course-card:hover .course-bg {
+            transform: scale(1.05);
+        }
+        
+        .course-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 2;
+        }
+        
+        .course-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            z-index: 3;
+            text-align: left;
+        }
+        
+        .course-title {
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .course-description {
+            font-size: 1.2rem;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+        
+        /* 不同卡片的描述颜色 */
+        .course-card:nth-child(1) .course-description {
+            color: #ffffff;
+        }
+        
+        .course-card:nth-child(2) .course-description {
+            color: #d5beff;
+        }
+        
+        .course-card:nth-child(3) .course-description {
+            color: #2ec4b6;
+        }
+        
+        .course-card:nth-child(4) .course-description {
+            color: #ffee00;
+        }
+        
+        /* 教学服务部分 */
         .teaching-service {
             background: linear-gradient(135deg, #f8f9fa, #e9f7f5);
             padding: 5rem 0;
@@ -412,7 +584,7 @@
         .service-text p {
             color: var(--text-gray);
             line-height: 1.6;
-            font-family: 'KaiFont', KaiTi, serif; /* 使用楷体 */
+            font-family: 'KaiFont', KaiTi, serif;
             font-size: 1.1rem;
         }
         
@@ -449,148 +621,7 @@
             opacity: 0;
         }
 
-        /* 页脚 */
-        footer {
-            background: var(--dark-bg);
-            color: rgba(255, 255, 255, 0.7);
-            padding: 4rem 0;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 3rem;
-        }
-
-        .footer-section h3 {
-            color: white;
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-logo {
-            width: 3.5rem;
-            height: 3.5rem;
-            background: var(--primary-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary-color);
-        }
-
-        .footer-bottom {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
-
-        .footer-bottom p {
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
-            line-height: 1.6;
-        }
-
-        /* 响应式设计 */
-        @media (max-width: 992px) {
-            .service-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .service-item {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .service-text {
-                max-width: 500px;
-                margin: 0 auto;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .detail-nav-links {
-                display: none;
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            .featured-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .featured-text h1 {
-                font-size: 2.5rem;
-            }
-            
-            .mobile-nav {
-                top: 4.5rem;
-            }
-            
-            .nav-logo {
-                height: 35px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            html {
-                font-size: 14px;
-            }
-
-            .section-title h2 {
-                font-size: 2rem;
-            }
-
-            .featured-text h1 {
-                font-size: 2rem;
-            }
-            
-            .detail-nav {
-                padding: 1rem;
-            }
-            
-            .nav-logo {
-                height: 30px;
-            }
-            
-            .service-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-            }
-            
-            .service-text h3 {
-                font-size: 1.3rem;
-            }
-        }
-        
-        /* 新增：免费课程体验区域样式 */
+        /* 免费课程体验区域 */
         #free-taste {
             width: 100%;
             min-height: 100vh;
@@ -772,8 +803,111 @@
             }
         }
         
-        /* 响应式调整 */
+        /* 页脚 */
+        footer {
+            background: var(--dark-bg);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 4rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo {
+            width: 3.5rem;
+            height: 3.5rem;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        /* 响应式设计 */
         @media (max-width: 992px) {
+            .service-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .service-item {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .service-text {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .resources-container {
+                flex-direction: column;
+                gap: 2rem;
+                max-width: 600px;
+            }
+            
+            .resource-item {
+                margin: 0;
+            }
+            
+            .resource-cards {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+            
+            .course-cards-grid {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+            
+            .course-card {
+                height: 220px;
+            }
+            
             .free-taste-container {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -787,7 +921,6 @@
                 font-size: 1.1rem;
             }
             
-            /* 确保在移动端有足够空间显示内容 */
             #free-taste {
                 min-height: auto;
                 height: auto;
@@ -799,8 +932,33 @@
                 margin: 0 auto;
             }
         }
-        
+
         @media (max-width: 768px) {
+            .detail-nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .featured-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .featured-text h1 {
+                font-size: 2.8rem;
+            }
+            
+            .mobile-nav {
+                top: 4.5rem;
+            }
+            
+            .nav-logo {
+                height: 35px;
+            }
+            
             .free-taste-content h2 {
                 font-size: 2rem;
             }
@@ -810,8 +968,63 @@
                 font-size: 1.1rem;
             }
         }
-        
+
         @media (max-width: 576px) {
+            html {
+                font-size: 14px;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .featured-text h1 {
+                font-size: 2.2rem;
+            }
+            
+            .featured-text p {
+                font-size: 1.1rem;
+            }
+            
+            .detail-nav {
+                padding: 1rem;
+            }
+            
+            .nav-logo {
+                height: 30px;
+            }
+            
+            .service-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .service-text h3 {
+                font-size: 1.3rem;
+            }
+            
+            .resource-item {
+                margin: 0;
+            }
+            
+            .resource-card-icon {
+                height: 80px;
+                font-size: 2rem;
+            }
+            
+            .resource-card-title {
+                font-size: 1.3rem;
+            }
+            
+            .course-title {
+                font-size: 1.5rem;
+            }
+            
+            .course-description {
+                font-size: 1.1rem;
+            }
+            
             .free-taste-content h2 {
                 font-size: 1.8rem;
             }
@@ -826,7 +1039,6 @@
         }
         
         @media (max-height: 700px) and (min-width: 993px) {
-            /* 当高度较小时确保内容完整显示 */
             #free-taste {
                 min-height: auto;
                 height: auto;
@@ -839,15 +1051,13 @@
     <!-- 导航栏 -->
     <nav class="detail-nav">
         <div class="nav-logo">
-            <!-- 白色SVG图标（透明背景时使用） -->
             <img src="picture/icons/white.svg" alt="汇委学科工作室" class="logo-white">
-            <!-- 黑色SVG图标（有背景时使用） -->
             <img src="picture/icons/black.svg" alt="汇委学科工作室" class="logo-black">
         </div>
         <div class="detail-nav-links">
             <a href="#featured">热门课程</a>
             <a href="#courses">原创资源</a>
-            <a href="#free-taste">免费体验</a> <!-- 新增导航链接 -->
+            <a href="#free-taste">免费体验</a>
             <a href="#teaching-service">教学服务</a>
             <a href="#contact">预约体验</a>
         </div>
@@ -859,21 +1069,20 @@
     <div class="mobile-nav" id="mobileNav">
         <a href="#featured">热门课程</a>
         <a href="#courses">原创资源</a>
-        <a href="#free-taste">免费体验</a> <!-- 新增移动端导航链接 -->
+        <a href="#free-taste">免费体验</a>
         <a href="#teaching-service">教学服务</a>
         <a href="#contact">预约体验</a>
     </div>
     
-    <!-- 精品展示背景包裹层 -->
+    <!-- 精品展示区域 -->
     <div class="hero-background-wrapper">
-        <!-- 英雄区域 -->
         <section class="featured-section" id="featured">
             <div class="container">
                 <div class="featured-content">
                     <div class="featured-text">
                         <h1>《备考校验》</h1>
                         <p>六月初强盛归来！汇集中考教学经验，由汇委学科工作室团队打造的全方位冲刺方案。通过科学的复习计划、精准的考点预测和高效的解题技巧，帮助学生在最后阶段实现突破。</p>
-                        <a href="_" class="btn btn-primary">查看详细内容</a>
+                        <a href="_" class="btn btn-featured">查看详细内容</a>
                     </div>
                     <a href="http://" target="_blank" rel="noopener noreferrer">
                     <div class="featured-image">
@@ -884,109 +1093,72 @@
         </section>
     </div>
     
-    <!-- 第一个原创资源部分 -->
+    <!-- 原创资源部分 -->
     <section class="original-section" id="courses">
         <div class="container">
             <div class="section-title">
-                <h2>汇委原创教育资源</h2>
+                <h2>汇委原创资源</h2>
                 <p>专业团队打造，品质保证</p>
             </div>
             
-            <div class="courses-grid">
-                <div class="course-card">
-                    <div class="course-image">
-                        <img src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&w=800&q=80" alt="优质教材">
-                        <span class="course-badge">热门</span>
-                    </div>
-                    <div class="course-content">
-                        <h3 class="course-title">优质教材</h3>
-                        <p class="course-description">由特级教师团队编写的系列教材，紧扣教学大纲，结合多年教学经验，帮助学生系统掌握知识点。</p>
-                        <div class="course-footer">
-                            <span class="course-price">¥199</span>
-                            <a href="#" class="btn btn-primary">查看详情</a>
-                        </div>
-                    </div>
+            <div class="resources-container">
+                <div class="resource-item" style="--delay: 1">
+                    <img src="picture/resource/a1.png" alt="原创资源1">
                 </div>
-                
-                <div class="course-card">
-                    <div class="course-image">
-                        <img src="https://images.unsplash.com/photo-1501504905252-473c47e087b8?auto=format&fit=crop&w=800&q=80" alt="教学资源">
-                        <span class="course-badge">新课</span>
-                    </div>
-                    <div class="course-content">
-                        <h3 class="course-title">教学资源</h3>
-                        <p class="course-description">丰富的教学资源库，包括课件、习题集、模拟试卷等，满足不同学生的学习需求。</p>
-                        <div class="course-footer">
-                            <span class="course-price">¥299</span>
-                            <a href="#" class="btn btn-primary">查看详情</a>
-                        </div>
-                    </div>
+                <div class="resource-item" style="--delay: 2">
+                    <img src="picture/resource/a2.png" alt="原创资源2">
                 </div>
-                
-                <div class="course-card">
-                    <div class="course-image">
-                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80" alt="教学服务">
-                    </div>
-                    <div class="course-content">
-                        <h3 class="course-title">教学服务</h3>
-                        <p class="course-description">全方位的教学服务体系，包括学习规划、进度跟踪、心理辅导等，为学生提供全面支持。</p>
-                        <div class="course-footer">
-                            <span class="course-price">¥399</span>
-                            <a href="#" class="btn btn-primary">查看详情</a>
-                        </div>
-                    </div>
+                <div class="resource-item" style="--delay: 3">
+                    <img src="picture/resource/a3.png" alt="原创资源3">
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- 第二个原创资源部分 -->
-    <section class="original-section" id="courses2">
+    <!-- 特色服务部分 -->
+    <section class="resource-cards-section">
         <div class="container">
             <div class="section-title">
-                <h2>汇委原创优质内容</h2>
-                <p>持续更新，满足学习需求</p>
+                <h2>汇委特色服务</h2>
+                <p>专业团队打造，全方位满足学习需求</p>
             </div>
             
-            <div class="courses-grid">
-                <div class="course-card">
-                    <div class="course-image">
-                        <img src="https://images.unsplash.com/photo-1548407260-da850faa41e3?auto=format&fit=crop&w=800&q=80" alt="在线课程">
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="resource-card-icon">
+                        <i class="fas fa-laptop"></i>
                     </div>
-                    <div class="course-content">
-                        <h3 class="course-title">在线课程</h3>
-                        <p class="course-description">灵活便捷的在线课程，随时随地学习，支持回放和互动，让学习不受时间和空间限制。</p>
-                        <div class="course-footer">
-                            <span class="course-price">¥499</span>
-                            <a href="#" class="btn btn-primary">查看详情</a>
+                    <div class="resource-card-content">
+                        <h3 class="resource-card-title">在线课程</h3>
+                        <p class="resource-card-description">灵活便捷的在线课程，随时随地学习，支持回放和互动，让学习不受时间和空间限制。</p>
+                        <div class="resource-card-footer">
+                            <a href="#" class="resource-card-btn">了解更多</a>
                         </div>
                     </div>
                 </div>
                 
-                <div class="course-card">
-                    <div class="course-image">
-                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80" alt="名师讲座">
+                <div class="resource-card">
+                    <div class="resource-card-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
                     </div>
-                    <div class="course-content">
-                        <h3 class="course-title">名师讲座</h3>
-                        <p class="course-description">定期举办的名师讲座，分享学习方法和考试技巧，拓宽学生视野，提升学习效率。</p>
-                        <div class="course-footer">
-                            <span class="course-price">¥199</span>
-                            <a href="#" class="btn btn-primary">查看详情</a>
+                    <div class="resource-card-content">
+                        <h3 class="resource-card-title">名师讲座</h3>
+                        <p class="resource-card-description">定期举办的名师讲座，分享学习方法和考试技巧，拓宽学生视野，提升学习效率。</p>
+                        <div class="resource-card-footer">
+                            <a href="#" class="resource-card-btn">了解更多</a>
                         </div>
                     </div>
                 </div>
                 
-                <div class="course-card">
-                    <div class="course-image">
-                        <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=800&q=80" alt="学习社区">
+                <div class="resource-card">
+                    <div class="resource-card-icon">
+                        <i class="fas fa-users"></i>
                     </div>
-                    <div class="course-content">
-                        <h3 class="course-title">学习社区</h3>
-                        <p class="course-description">活跃的学习社区，学生可以交流学习心得，互相帮助，共同进步，建立良好的学习氛围。</p>
-                        <div class="course-footer">
-                            <span class="course-price">¥99</span>
-                            <a href="#" class="btn btn-primary">查看详情</a>
+                    <div class="resource-card-content">
+                        <h3 class="resource-card-title">学习社区</h3>
+                        <p class="resource-card-description">活跃的学习社区，学生可以交流学习心得，互相帮助，共同进步，建立良好的学习氛围。</p>
+                        <div class="resource-card-footer">
+                            <a href="#" class="resource-card-btn">了解更多</a>
                         </div>
                     </div>
                 </div>
@@ -994,7 +1166,55 @@
         </div>
     </section>
     
-    <!-- 新增：免费课程体验区域 -->
+    <!-- 精选课程部分 -->
+    <section class="course-cards-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>汇委精选课程</h2>
+                <p>专业团队打造，全方位提升学习效果</p>
+            </div>
+            
+            <div class="course-cards-grid">
+                <div class="course-card">
+                    <div class="course-bg" style="background-image: url('picture/class/class1.png');"></div>
+                    <div class="course-overlay"></div>
+                    <div class="course-content">
+                        <h3 class="course-title">配套教学资源</h3>
+                        <p class="course-description">全年级电子书，配套教学资料</p>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-bg" style="background-image: url('picture/class/class2.png');"></div>
+                    <div class="course-overlay"></div>
+                    <div class="course-content">
+                        <h3 class="course-title">数学物理专项提升</h3>
+                        <p class="course-description">掌握做题技巧，快速提高分析能力</p>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-bg" style="background-image: url('picture/class/class3.png');"></div>
+                    <div class="course-overlay"></div>
+                    <div class="course-content">
+                        <h3 class="course-title">山西中考专项训练</h3>
+                        <p class="course-description">专注于山西中考，更符合山西本地学情</p>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-bg" style="background-image: url('picture/class/class4.png');"></div>
+                    <div class="course-overlay"></div>
+                    <div class="course-content">
+                        <h3 class="course-title">联动课程系列</h3>
+                        <p class="course-description">由“汇委学科工作室”和“scratch火柴人”联动出品。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 免费体验区域 -->
     <section id="free-taste">
         <div class="free-taste-bg">
             <div class="circle"></div>
@@ -1012,13 +1232,12 @@
                 </a>
             </div>
             <div class="free-taste-image">
-                <!-- 修改为指定图片路径 -->
                 <img src="picture/taste.png" alt="免费课程体验">
             </div>
         </div>
     </section>
     
-    <!-- 新增的教学服务部分 -->
+    <!-- 教学服务部分 -->
     <section class="teaching-service" id="teaching-service">
         <div class="container">
             <div class="section-title">
@@ -1082,7 +1301,7 @@
                     <ul class="footer-links">
                         <li><a href="#featured">热门课程</a></li>
                         <li><a href="#courses">原创资源</a></li>
-                        <li><a href="#free-taste">免费体验</a></li> <!-- 更新页脚链接 -->
+                        <li><a href="#free-taste">免费体验</a></li>
                         <li><a href="#teaching-service">教学服务</a></li>
                         <li><a href="#contact">预约体验</a></li>
                     </ul>
@@ -1144,7 +1363,7 @@
                 
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80, // 考虑导航栏高度
+                        top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
                     });
                     
@@ -1162,11 +1381,9 @@
             const nav = document.querySelector('.detail-nav');
             const scrollPosition = window.scrollY;
             
-            // 当滚动位置大于100px时，导航栏变为白色半透明
             if (scrollPosition > 100) {
                 nav.classList.add('scrolled');
             } else {
-                // 当滚动位置小于等于100px时，导航栏变为透明
                 nav.classList.remove('scrolled');
             }
         });
